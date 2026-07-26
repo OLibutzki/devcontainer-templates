@@ -1,0 +1,22 @@
+name: "Smoke Test"
+description: "Builds a Dev Container Template and runs its test suite inside the resulting container."
+inputs:
+  template:
+    description: "The id of the Template to test (matching a folder in ./src)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout"
+      id: checkout
+      uses: actions/checkout@v4
+
+    - name: "Build"
+      id: build
+      shell: bash
+      run: "${{ github.action_path }}/build.sh ${{ inputs.template }}"
+
+    - name: "Test"
+      id: test
+      shell: bash
+      run: "${{ github.action_path }}/test.sh ${{ inputs.template }}"

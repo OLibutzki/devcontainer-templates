@@ -1,0 +1,25 @@
+{
+	"name": "Dev Container (egress-firewalled)",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "dev",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"shutdownAction": "stopCompose",
+	"remoteUser": "vscode",
+
+	// 👇 This Template deliberately leaves the dev container itself unopinionated.
+	//    Add the Features, extensions and lifecycle commands your project needs.
+	//
+	//    Note on the boundary: Features and image layers are downloaded by the
+	//    devcontainer CLI / Docker daemon over the HOST network, so they are NOT
+	//    subject to the egress allowlist. Everything that runs inside the started
+	//    container (postCreateCommand, package installs, your agent) IS.
+	//    See .devcontainer/egress/README.md.
+	// "features": {},
+
+	// 👇 The proxy env vars live in docker-compose.yml so that they apply to every
+	//    process in the container, not just to VS Code's terminals.
+
+	// 👇 Confirm the firewall is actually enforcing before you trust it:
+	//    bash .devcontainer/egress/verify-egress.sh
+	"postAttachCommand": "echo 'Egress is restricted to .devcontainer/egress/allowed-domains.txt — run bash .devcontainer/egress/verify-egress.sh to check it.'"
+}

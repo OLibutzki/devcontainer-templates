@@ -1,0 +1,9 @@
+# Shell scripts and Squid config are consumed inside Linux containers.
+# CRLF would break shebangs and Squid's ACL file parsing, so pin them to LF
+# regardless of the host's core.autocrlf setting.
+* text=auto eol=lf
+*.sh text eol=lf
+*.conf text eol=lf
+allowed-domains.txt text eol=lf
+*.png binary
+*.jpg binary

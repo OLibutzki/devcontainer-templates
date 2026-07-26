@@ -1,0 +1,19 @@
+{
+	"name": "Dev Container Templates authoring",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+	"features": {
+		// Needed to run `devcontainer up` from inside this container when
+		// smoke-testing the Templates in ./src.
+		"ghcr.io/devcontainers/features/docker-in-docker:4": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+	"postCreateCommand": "npm install -g @devcontainers/cli",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	},
+	"remoteUser": "node"
+}

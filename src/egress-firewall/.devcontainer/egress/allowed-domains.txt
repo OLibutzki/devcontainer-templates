@@ -1,0 +1,28 @@
+# Egress allowlist for the dev container.
+#
+# One entry per line. A leading dot matches the domain and all its subdomains
+# (.example.com covers api.example.com); a bare entry matches only that exact
+# host. Applies to plain HTTP and to HTTPS, where it is matched against the
+# hostname in the CONNECT request.
+#
+# Anything not listed here is unreachable. After editing, reload the policy:
+#
+#   docker compose -f .devcontainer/docker-compose.yml restart egress
+#
+# This file must never be empty — Squid refuses to start on an empty ACL file.
+
+# --- Required for the dev container itself to start and attach ---------------
+update.code.visualstudio.com
+.vscode-cdn.net
+.vscode.blob.core.windows.net
+marketplace.visualstudio.com
+.gallerycdn.vsassets.io
+
+# --- Add the hosts your project needs below ----------------------------------
+#
+# Nothing else gets out. When something inside the container hangs or fails to
+# connect, the proxy log names the host it wanted:
+#
+#   docker compose -f .devcontainer/docker-compose.yml logs egress | grep TCP_DENIED
+#
+# Add it here only if you actually want that reachable.
