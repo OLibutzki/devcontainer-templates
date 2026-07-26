@@ -1,5 +1,10 @@
 name: "CI - Test Templates"
 on:
+  # Pushes to main are tested too. Without this, work committed straight to main
+  # — rather than arriving through a pull request — is never smoke-tested.
+  push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
@@ -7,21 +12,39 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      templates: ${{ steps.filter.outputs.changes }}
+      templates: ${{ steps.select.outputs.templates }}
     steps:
       - uses: actions/checkout@v4
+
+      # Only meaningful for a pull request, where there is a base branch to diff
+      # against. Keeps CI cheap once the collection holds several Templates.
       - uses: dorny/paths-filter@v3
         id: filter
+        if: github.event_name == 'pull_request'
         with:
           filters: |
             egress-firewall: ./**/egress-firewall/**
+
+      - name: "Select Templates to test"
+        id: select
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            templates='${{ steps.filter.outputs.changes }}'
+          else
+            # Push and manual runs test everything, derived from ./src so this
+            # does not need updating when a Template is added.
+            templates=$(ls -1 src | jq -R . | jq -sc .)
+          fi
+          echo "Testing: ${templates}"
+          echo "templates=${templates}" >> "$GITHUB_OUTPUT"
 
   test:
     needs: [detect-changes]
     if: ${{ needs.detect-changes.outputs.templates != '[]' }}
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         templates: ${{ fromJSON(needs.detect-changes.outputs.templates) }}
     steps:

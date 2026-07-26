@@ -57,4 +57,4 @@ There is no SSH, no ICMP and no arbitrary TCP — only HTTP/HTTPS through the pr
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-template.json](https://github.com/olibutzki/devcontainer-templates/blob/main/src/egress-firewall/devcontainer-template.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-template.json](https://github.com/OLibutzki/devcontainer-templates/blob/main/src/egress-firewall/devcontainer-template.json).  Add additional notes to a `NOTES.md`._

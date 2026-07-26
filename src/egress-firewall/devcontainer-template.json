@@ -3,8 +3,8 @@
     "version": "0.0.1",
     "name": "Dev Container with Squid Egress Firewall",
     "description": "EXPERIMENTAL (0.x — expect breaking changes between releases). A dev container that can only reach an explicit allowlist of hosts. All traffic leaves through a Squid sidecar; the dev container itself has no route to the internet, so processes that ignore the proxy get no connectivity rather than unrestricted access. Intended for running coding agents under a reviewable network policy.",
-    "documentationURL": "https://github.com/olibutzki/devcontainer-templates/tree/main/src/egress-firewall",
-    "licenseURL": "https://github.com/olibutzki/devcontainer-templates/blob/main/LICENSE",
+    "documentationURL": "https://github.com/OLibutzki/devcontainer-templates/tree/main/src/egress-firewall",
+    "licenseURL": "https://github.com/OLibutzki/devcontainer-templates/blob/main/LICENSE",
     "options": {
         "squidImage": {
             "type": "string",
